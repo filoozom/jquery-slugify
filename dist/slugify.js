@@ -1,4 +1,4 @@
-/*! jQuery Slugify - v1.0.4 - 2015-01-01
+/*! jQuery Slugify - v1.0.4 - 2015-02-10
 * https://github.com/madflow/jquery-slugify
 * Copyright (c) 2015 madflow; Licensed MIT */
 ;(function($) {
@@ -20,10 +20,16 @@
                 if (true === $target.data('locked')) {
                     return;
                 }
-                if ($target.is('input') || $target.is('textarea')) {
-                    $target.val($.slugify($source.val(), options));
+                var val;
+                if ($source.attr('contentEditable') === 'true') {
+                    val = $source.text();
                 } else {
-                    $target.text($.slugify($source.val(), options));
+                    val = $source.val();
+                }
+                if ($target.is('input') || $target.is('textarea')) {
+                    $target.val($.slugify(val, options));
+                } else {
+                    $target.text($.slugify(val, options));
                 }
             });
         });
